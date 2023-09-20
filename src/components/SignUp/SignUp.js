@@ -1,8 +1,8 @@
-import React, { useEffect, useReducer, useState } from "react";
-import style from "./Login.module.css";
+import React, { useEffect, useReducer, useState} from "react";
+import style from "./SignUp.module.css";
 import Button from "../UI-Store/Button/Button";
 import Input from "../UI-Store/Input/Input";
-import { Link } from "react-router-dom";
+import { Link , useNavigate} from "react-router-dom";
 
 const emailReduser = (state, action) => {
   if (action.type === "INPUT") {
@@ -21,7 +21,9 @@ const passwordReduser = (state, action) => {
   return { value: "", isValid: null };
 };
 
-function Login(props) {
+function SignUp(props) {
+    const navigate = useNavigate();
+  const [Name, setName] = useState("");
   const [formIsValid, setFormIsValid] = useState(false);
 
   const [emailState, dispatchEmail] = useReducer(emailReduser, {
@@ -34,8 +36,10 @@ function Login(props) {
   });
 
   useEffect(() => {
-    setFormIsValid(emailState.isValid && passwordState.isValid);
-  }, [emailState.isValid, passwordState.isValid]);
+      setFormIsValid(
+        emailState.isValid && passwordState.isValid && Name.trim().length > 1
+      )
+  }, [emailState.isValid, passwordState.isValid, Name]);
 
   const HandleEmail = (e) => {
     dispatchEmail({ type: "INPUT", val: e.target.value });
@@ -43,27 +47,44 @@ function Login(props) {
   const HandlePassword = (e) => {
     dispatchPassword({ type: "INPUT", val: e.target.value });
   };
+  const HandleName = (e) => {
+    setName(e.target.value);
+  };
 
-  const HandleSubmit = async (e) => {
+  const HandleSubmit = async(e) => {
     e.preventDefault();
-  
-    const  email= emailState.value;
-    const  password= passwordState.value;
-    try {
-      const res = await fetch(`http://localhost:5000/login?email=${email}&password=${password}`);
-      const result = await res.json();
-      if(result.login){
-        alert(result.message,);
-      }else{ alert(result.message)}
-    } catch (error) {
-      console.log(error);
+    const newuser={
+        name:Name,
+        email:emailState.value,
+        password:passwordState.value
     }
+   try {
+    const res = await fetch(`http://localhost:5000/signup`,{
+        method: 'POST',
+        headers: {'content-type':'application/json'},
+        body: JSON.stringify(newuser)
+    });
+  const result = await res.json();
+    if(!result.error){
+        alert('account created successfully');
+        navigate('/login');
+    }else throw new Error(result.message);
+   } catch (error) {
+   alert(error.message);
+   }
   };
 
   return (
-    <div className={style.login}>
-      <h3>Login</h3>
+    <div className={style.SignUp}>
+        <h3>Create new account</h3>
       <form onSubmit={HandleSubmit}>
+          <Input
+            id="Name"
+            type="text"
+            state={Name}
+            onChange={HandleName}
+            value={Name}
+          />
         <Input
           id="Email"
           type="text"
@@ -81,13 +102,13 @@ function Login(props) {
 
         <div className={style.actions}>
           <Button type="submit" disabled={!formIsValid}>
-            Login
+           Sign Up
           </Button>
         </div>
-        <Link to="/signup">Sign Up</Link>
+         <Link to='/login'>Login</Link>
       </form>
     </div>
   );
 }
 
-export default Login;
+export default SignUp;
