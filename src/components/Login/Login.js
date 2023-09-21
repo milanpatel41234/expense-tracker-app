@@ -46,11 +46,15 @@ function Login(props) {
 
   const HandleSubmit = async (e) => {
     e.preventDefault();
-  
-    const  email= emailState.value;
-    const  password= passwordState.value;
+   const obj = {
+      email: emailState.value,
+    password: passwordState.value};
     try {
-      const res = await fetch(`http://localhost:5000/login?email=${email}&password=${password}`);
+      const res = await fetch(`http://localhost:5000/login`,{
+        method: 'POST',
+        headers:{'Content-Type': 'application/json'},
+        body: JSON.stringify(obj)
+      });
       const result = await res.json();
       if(result.login){
         alert(result.message,);
