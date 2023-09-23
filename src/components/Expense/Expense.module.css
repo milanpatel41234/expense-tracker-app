@@ -1,0 +1,46 @@
+.container{
+    width: 90%;
+    max-width: 40rem;
+    margin: auto;
+}
+.container form{
+    justify-content: flex-start;
+}
+
+.inDiv{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+.inDiv select{
+    
+    flex: 3;
+    font: inherit;
+    padding: 0.35rem 0.35rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    max-width: 25rem;
+    max-height: 3rem;
+}
+.list{
+    border: 1px solid black;
+    border-radius: 20px;
+    padding: 5px;
+    background-color: rgb(179, 127, 180);
+    margin-top: 1rem;
+}
+
+.listdiv{display:flex;
+    flex-direction:row;
+     justify-content:space-around;
+     
+    }
+    .listdiv button{
+        height: 2.3rem;
+        width: 3.7rem;
+        border-radius: .5rem;
+        background-color: rgb(108, 17, 96);
+        color: white;
+        font-size: medium;
+    }

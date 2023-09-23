@@ -8,12 +8,6 @@
     display: block;
   }
   
-  .control label {
-    font-weight: bold;
-    flex: 1;
-    color: #464646;
-    margin-bottom: 0.5rem;
-  }
   
   .control input {
     flex: 3;
@@ -38,10 +32,3 @@
     text-align: center;
   }
   
-  @media (min-width: 768px) {
-    .control {
-      align-items: center;
-      flex-direction: row;
-    }
-  
-  }
