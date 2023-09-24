@@ -1,11 +1,11 @@
 import React from "react";
 import style from "./Expense.module.css";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import {useSelector,useDispatch } from "react-redux";
 import { getExpense } from "../Redux-store/expenses";
-import { useSelector } from "react-redux";
 
-function ExpenseList(props) {
+function ExpenseList() {
+  const Auth = useSelector(state=>state.Auth);
   const Expense = useSelector((state) => state.Expense);
   const dispatch = useDispatch();
   let ListItem = 'No Items';
@@ -18,6 +18,8 @@ function ExpenseList(props) {
     try {
       const res = await fetch(`http://localhost:5000/expense/${id}`, {
       method: "DELETE",
+      headers:{"Content-Type": "application/json",
+       "token":Auth.token}
     });
     if(res.ok) dispatch(getExpense())
     else throw new Error(res.error)

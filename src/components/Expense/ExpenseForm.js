@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import style from "./Expense.module.css";
 import Input from "../UI-Store/Input/Input";
 import Button from "../UI-Store/Button/Button";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getExpense } from "../Redux-store/expenses";
 
 function ExpenseForm() {
+  const Auth = useSelector(state => state.Auth);
   const dispatch = useDispatch()
   const [Amount, setAmount] = useState("");
   const [Date, setDate] = useState("");
@@ -44,6 +45,7 @@ function ExpenseForm() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            "token":Auth.token
           },
           body: JSON.stringify(Expense),
         });

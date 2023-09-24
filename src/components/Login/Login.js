@@ -2,7 +2,9 @@ import React, { useEffect, useReducer, useState } from "react";
 import style from "./Login.module.css";
 import Button from "../UI-Store/Button/Button";
 import Input from "../UI-Store/Input/Input";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { AuthAction } from "../Redux-store";
 
 const emailReduser = (state, action) => {
   if (action.type === "INPUT") {
@@ -21,7 +23,9 @@ const passwordReduser = (state, action) => {
   return { value: "", isValid: null };
 };
 
-function Login(props) {
+function Login() {
+const navigate = useNavigate()
+  const dispatch = useDispatch()
   const [formIsValid, setFormIsValid] = useState(false);
 
   const [emailState, dispatchEmail] = useReducer(emailReduser, {
@@ -57,7 +61,9 @@ function Login(props) {
       });
       const result = await res.json();
       if(result.login){
+        dispatch(AuthAction.setUserVerified({token: result.token}));
         alert(result.message,);
+        navigate('/')
       }else{ alert(result.message)}
     } catch (error) {
       console.log(error);
