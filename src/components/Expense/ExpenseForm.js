@@ -50,7 +50,13 @@ function ExpenseForm() {
           body: JSON.stringify(Expense),
         });
       if(!res.ok) throw new Error()
-      else{dispatch(getExpense())}
+      else{
+    setAmount('');
+    setCategory('NO');
+    setDate('');
+    setDetails('');
+    dispatch(getExpense())
+    }
       } catch (error) {
         console.log("errrr", error);
       }

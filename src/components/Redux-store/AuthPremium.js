@@ -1,12 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-export const getExpense = createAsyncThunk('Expense/getData', async(arg,{
+export const varifyPremium = createAsyncThunk('Authentication/premium', async(arg,{
     rejectWithValue
 })=>{
 try {
   const token = localStorage.getItem('Token');
   
-    const response = await fetch(`http://localhost:5000/expense`,{
+    const response = await fetch(`http://localhost:5000/varifypremium`,{
       headers:{"Content-Type":"application/json", "token":token}
     });
 
@@ -21,15 +21,15 @@ try {
 }
 })
 
-const ExpenseSlice = createSlice({
-  name: "Expense",
-  initialState: { ExpenseArray: []},
+const AuthPremiumSlice = createSlice({
+  name: "AuthPremium",
+  initialState: { isPremiumUser: false},
   reducers: {  },
     extraReducers:{
-     [getExpense.fulfilled] : (state ,{payload})=>{
-      state.ExpenseArray =  payload;
+     [varifyPremium.fulfilled] : (state ,{payload})=>{
+      state.isPremiumUser =  payload.isPremiumUser;
      }
   },
 });
 
-export default ExpenseSlice;
+export default AuthPremiumSlice;

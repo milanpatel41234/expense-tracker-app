@@ -12,7 +12,7 @@ function ExpenseList() {
 
   useEffect(() => {
     dispatch(getExpense());
-  }, []);
+  }, [dispatch]);
 
   const HandleDelete = async (id) => {
     try {
@@ -35,13 +35,13 @@ function ExpenseList() {
    ListItem = Expense.ExpenseArray.map((exp) => {
     return (
       <li key={exp.id} className={style.list}>
-        <div className={style.listdiv}>
+        <div className={style.listdi}>
           <h3>{exp.amount}</h3>
-          <p>Date: {exp.date}</p>
           <p>Category: {exp.category}</p>
         </div>
         <div className={style.listdiv}>
-          <p>Details: {exp.details}</p>
+          <p>{exp.date}</p>
+          <p>{exp.details}</p>
           <button onClick={HandleEdit.bind(null, exp)} variant="danger">
             Edit
           </button>
@@ -56,7 +56,7 @@ function ExpenseList() {
     );
   });
   }
-  return <div>{ListItem}</div>;
+  return <div className={style.container}>{ListItem}</div>;
 }
 
 export default ExpenseList;

@@ -5,13 +5,15 @@ import { useSelector } from "react-redux";
 import Login from "./components/Login/Login";
 import SignUp from "./components/SignUp/SignUp";
 import ExpensePage from "./components/Expense/ExpensePage";
+import Header from "./components/Header/Header";
 
 function App() {
   const Auth = useSelector((state) => state.Auth);
-  console.log(Auth)
+
   return (
     <div className="App">
-      <header className="App-header"></header>
+      <header className="App-header">
+        <Header/></header>
       <Routes>
         <Route
           path="/"
