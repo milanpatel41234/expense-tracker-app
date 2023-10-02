@@ -9,7 +9,6 @@ try {
     const response = await fetch(`http://localhost:5000/varifypremium`,{
       headers:{"Content-Type":"application/json", "token":token}
     });
-
       if (!response.ok) {
         throw new Error("Unable to fetch Expenses! Something went wronge.");
       } else {

@@ -8,12 +8,13 @@ import { varifyPremium } from "../Redux-store/AuthPremium";
 function Header() {
   const Auth = useSelector((state) => state.Auth);
   const AuthPremium = useSelector((state) => state.AuthPremium);
-  console.log(AuthPremium.isPremiumUser);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(varifyPremium());
-  }, [dispatch]);
+    if (Auth.loginState) {
+      dispatch(varifyPremium());
+    }
+  }, [dispatch, Auth.loginState]);
 
   const HandleLogout = () => {
     dispatch(AuthAction.setlogout());
@@ -33,6 +34,7 @@ function Header() {
             method: "POST",
             headers: { "Content-Type": "application/json", token: Auth.token },
             body: JSON.stringify({
+              status: "success",
               order_id: options.order_id,
               payment_id: result.razorpay_payment_id,
             }),
@@ -43,8 +45,16 @@ function Header() {
       const RZP1 = new window.Razorpay(options);
       RZP1.open();
       e.preventDefault();
-      RZP1.on("payment.failed", (response) => {
-        console.log(response);
+      RZP1.on("payment.failed", async (result) => {
+        await fetch("http://localhost:5000/purchasepremium/updatestatus", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", token: Auth.token },
+          body: JSON.stringify({
+            status: "failed",
+            order_id: options.order_id,
+            payment_id: result.error.metadata.payment_id,
+          }),
+        });
         alert("Something went wrong");
       });
     } catch (error) {
@@ -53,13 +63,16 @@ function Header() {
   };
   return (
     <div className={style.header}>
-      {AuthPremium.isPremiumUser ? (
-        <span>Premium User</span>
-      ) : (
-        <button onClick={PurchasePremium}>Buy Premium</button>
-      )}
+      {Auth.loginState &&
+        (AuthPremium.isPremiumUser ? (
+          <span className={style.premium}>Premium User</span>
+        ) : (
+          <button className={style.premium} onClick={PurchasePremium}>
+            Buy Premium
+          </button>
+        ))}
       <h2>My Expenses</h2>
-      <button onClick={HandleLogout}>Logout</button>
+      {Auth.loginState && <button onClick={HandleLogout}>Logout</button>}
     </div>
   );
 }
