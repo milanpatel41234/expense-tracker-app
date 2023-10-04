@@ -1,30 +1,58 @@
-.header {
+
+.header{
+  display: block;
   width: 100vw;
+  height: fit-content;
+  margin: 0;
+  padding: 0;
+}
+.nav{
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
-  align-items: baseline;
+  justify-content: space-between;
+  width: 97%;
+  margin: auto;
 }
-.header h2 {
-  display: block;
-  width: 80vw;
-}
-.header button {
-  height: 1.6rem;
+.btn{
+  text-decoration: none;
   border: none;
-  border-radius: 5px;
+  font: 1rem sans-serif;
+  color: black;
   background-color: rgb(175, 176, 177);
+  border-radius: 5px;
+  margin: 2px;
+  padding: 5px;
 }
-
-.header button:hover,
-.header button:active {
+.premium{
+  text-decoration: none;
+  border: none;
+  font: 1rem sans-serif;
+  background-color: green;
+  border-radius: 5px;
+  margin: 2px;
+  padding: 5px;
+  color: white;
+}
+.btn:hover,
+.btn:active {
   background: #919091;
   border-color: #919091;
 }
-.header .premium {
-  background-color: green;
-  color: aliceblue;
-}
-.header .premium:hover {
+.premium:hover {
   background-color: rgb(41, 131, 41);
+}
+
+@media (max-width: 768px) {
+  .btn{
+   font-size: 0.8rem;
+   padding-left: 2px;
+   padding-right: 2px;
+  
+  }
+  .premium{
+    font-size: 0.8rem;
+    padding-left: 2px;
+    padding-right: 2px;
+   
+  }
 }

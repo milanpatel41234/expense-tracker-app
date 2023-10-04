@@ -69,7 +69,7 @@ function ExpenseForm() {
         <div className={style.inDiv}>
           <Input id="Date" type="date" onChange={HandleDate} value={Date} />
           <select onChange={HandleCategory} value={Category}>
-            <option value="NO">Select Expense category</option>
+            <option value="NO">Select Category</option>
             <option value="Investment">Investment</option>
             <option value="Fun">Fun</option>
             <option value="Food">Food</option>

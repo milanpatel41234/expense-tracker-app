@@ -6,6 +6,7 @@ import Login from "./components/Login/Login";
 import SignUp from "./components/SignUp/SignUp";
 import ExpensePage from "./components/Expense/ExpensePage";
 import Header from "./components/Header/Header";
+import LeaderBoard from "./components/LeaderBoard/LeaderBoard";
 
 function App() {
   const Auth = useSelector((state) => state.Auth);
@@ -21,6 +22,7 @@ function App() {
         />
         <Route path="login" element={<Login />} />
         <Route path="signup" element={<SignUp />} />
+        <Route path="leaderboard" element={<LeaderBoard/>} />
       </Routes>
     </div>
   );

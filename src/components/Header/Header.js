@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
-//import Razorpay from "razorpay";
 import style from "./Header.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { AuthAction } from "../Redux-store";
 import { varifyPremium } from "../Redux-store/AuthPremium";
+import { Link } from "react-router-dom/dist";
 
 function Header() {
   const Auth = useSelector((state) => state.Auth);
@@ -39,6 +39,7 @@ function Header() {
               payment_id: result.razorpay_payment_id,
             }),
           });
+          dispatch(varifyPremium());
           alert("you are now premium user");
         },
       };
@@ -62,17 +63,33 @@ function Header() {
     }
   };
   return (
-    <div className={style.header}>
-      {Auth.loginState &&
-        (AuthPremium.isPremiumUser ? (
-          <span className={style.premium}>Premium User</span>
-        ) : (
-          <button className={style.premium} onClick={PurchasePremium}>
-            Buy Premium
-          </button>
-        ))}
-      <h2>My Expenses</h2>
-      {Auth.loginState && <button onClick={HandleLogout}>Logout</button>}
+    <div>
+      <h2 className={style.header}>My Expenses</h2>
+      <div  className={style.nav}>
+        {Auth.loginState &&
+          (AuthPremium.isPremiumUser ? (
+            <div>
+              <span className={style.premium}>Premium User</span>
+              <Link className={style.btn} to="/leaderboard">
+                LeaderBoard
+              </Link>
+            </div>
+          ) : (
+            <button className={style.premium} onClick={PurchasePremium}>
+              Buy Premium
+            </button>
+          ))}
+        {Auth.loginState && (
+          <div>
+            <Link className={style.btn} to="/">
+              Expenses
+            </Link>
+            <button className={style.btn} onClick={HandleLogout}>
+              Logout
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
