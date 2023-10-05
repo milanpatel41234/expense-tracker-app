@@ -29,7 +29,6 @@ function ExpenseList() {
    
   };
 
-  const HandleEdit = (item) => {};
 
   if(Expense.ExpenseArray && Expense.ExpenseArray.length>0){
    ListItem = Expense.ExpenseArray.map((exp) => {
@@ -42,9 +41,6 @@ function ExpenseList() {
         <div className={style.listdiv}>
           <p>{exp.date}</p>
           <p>{exp.details}</p>
-          <button onClick={HandleEdit.bind(null, exp)} variant="danger">
-            Edit
-          </button>
           <button
             onClick={HandleDelete.bind(null, exp.id)}
             variant="danger"

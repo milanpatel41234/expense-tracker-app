@@ -25,10 +25,9 @@ function LeaderBoard() {
 
 if(List.length>0){
     leaderboard = List.map((i)=>{
-        return <li className={style.list} key={i.userEmail}><div><h3>{i.user.name}</h3><p>{i.total}</p></div></li>
+        return <li className={style.list} key={i.email}><div><h3>{i.name}</h3><p>{i.total}</p></div></li>
     })
 }
-
   return (
     <div className={style.container}>
       <ol>{leaderboard}</ol>

@@ -3,9 +3,10 @@ import style from "./Header.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { AuthAction } from "../Redux-store";
 import { varifyPremium } from "../Redux-store/AuthPremium";
-import { Link } from "react-router-dom/dist";
+import { Link , useNavigate} from "react-router-dom/dist";
 
 function Header() {
+  const navigate = useNavigate();
   const Auth = useSelector((state) => state.Auth);
   const AuthPremium = useSelector((state) => state.AuthPremium);
   const dispatch = useDispatch();
@@ -18,6 +19,7 @@ function Header() {
 
   const HandleLogout = () => {
     dispatch(AuthAction.setlogout());
+    navigate('/login');
   };
   const PurchasePremium = async (e) => {
     try {
@@ -65,7 +67,7 @@ function Header() {
   return (
     <div>
       <h2 className={style.header}>My Expenses</h2>
-      <div  className={style.nav}>
+      <div className={style.nav}>
         {Auth.loginState &&
           (AuthPremium.isPremiumUser ? (
             <div>
@@ -79,7 +81,7 @@ function Header() {
               Buy Premium
             </button>
           ))}
-        {Auth.loginState && (
+        {Auth.loginState ? (
           <div>
             <Link className={style.btn} to="/">
               Expenses
@@ -88,6 +90,10 @@ function Header() {
               Logout
             </button>
           </div>
+        ) : (
+          <Link className={style.btn} to="/login">
+            Login
+          </Link>
         )}
       </div>
     </div>

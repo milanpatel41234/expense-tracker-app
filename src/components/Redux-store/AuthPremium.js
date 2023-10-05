@@ -10,7 +10,7 @@ try {
       headers:{"Content-Type":"application/json", "token":token}
     });
       if (!response.ok) {
-        throw new Error("Unable to fetch Expenses! Something went wronge.");
+        throw new Error("Unable to fetch! Something went wronge.");
       } else {
         const data = await response.json();
         return data
