@@ -9,9 +9,9 @@ try {
     const response = await fetch(`http://localhost:5000/varifypremium`,{
       headers:{"Content-Type":"application/json", "token":token}
     });
-      if (!response.ok) {
+    if (!response.ok) {
         throw new Error("Unable to fetch! Something went wronge.");
-      } else {
+    } else {
         const data = await response.json();
         return data
       }

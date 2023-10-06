@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 function LeaderBoard() {
   const Auth = useSelector((state) => state.Auth);
   const [List, setList] = useState([]);
-  let leaderboard ='No Items';
 
   useEffect(() => {
     (async () => {
@@ -15,7 +14,9 @@ function LeaderBoard() {
         });
         if(response.ok){
             const data = await response.json();
-            setList(data)
+            setList(data.map((i)=>{
+                return <li key={i.email}><div className={style.list}><h3>{i.name}</h3><p>{i.total}</p></div></li>
+            }))
         }else throw new Error(response.error)
       } catch (error) {
        console.log(error)
@@ -23,14 +24,9 @@ function LeaderBoard() {
     })();
   },[Auth.token]);
 
-if(List.length>0){
-    leaderboard = List.map((i)=>{
-        return <li className={style.list} key={i.email}><div><h3>{i.name}</h3><p>{i.total}</p></div></li>
-    })
-}
   return (
     <div className={style.container}>
-      <ol>{leaderboard}</ol>
+      <ol>{List}</ol>
     </div>
   );
 }

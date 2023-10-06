@@ -1,9 +1,5 @@
-/* .container {
-  width: 90%;
-  max-width: 40rem;
-  margin: auto;
-} */
-.list div{
+
+.list{
    display: flex;
   flex-direction: row; 
   justify-content: space-between;
