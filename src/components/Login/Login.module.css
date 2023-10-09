@@ -43,7 +43,20 @@
     border-color: red;
     background: #fbdada;
   }
-  
+  .btn{
+    text-decoration: none;
+    border: none;
+    font: .8rem sans-serif;
+    color: black;
+    background-color: rgb(175, 176, 177);
+    border-radius: 5px;
+    margin-left: 5px;
+    padding: 5px;
+  }
+  .btn:hover{
+  background: #919091;
+  border-color: #919091;
+}
   .actions {
     text-align: center;
   }

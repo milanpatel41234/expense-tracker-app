@@ -24,8 +24,9 @@ const passwordReduser = (state, action) => {
 };
 
 function Login() {
-const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [ForgotPassword, setForgotPassword] = useState(false);
   const [formIsValid, setFormIsValid] = useState(false);
 
   const [emailState, dispatchEmail] = useReducer(emailReduser, {
@@ -38,8 +39,10 @@ const navigate = useNavigate()
   });
 
   useEffect(() => {
-    setFormIsValid(emailState.isValid && passwordState.isValid);
-  }, [emailState.isValid, passwordState.isValid]);
+    setFormIsValid(
+      emailState.isValid && (passwordState.isValid || ForgotPassword)
+    );
+  }, [emailState.isValid, passwordState.isValid, ForgotPassword]);
 
   const HandleEmail = (e) => {
     dispatchEmail({ type: "INPUT", val: e.target.value });
@@ -50,21 +53,29 @@ const navigate = useNavigate()
 
   const HandleSubmit = async (e) => {
     e.preventDefault();
-   const obj = {
+    let url = `http://localhost:5000/login`;
+    let obj = {
       email: emailState.value,
-    password: passwordState.value};
+      password: passwordState.value,
+    };
+    if (ForgotPassword) {
+      url = `http://localhost:5000/forgotpassword`;
+      obj = { email: emailState.value };
+    }
     try {
-      const res = await fetch(`http://localhost:5000/login`,{
-        method: 'POST',
-        headers:{'Content-Type': 'application/json'},
-        body: JSON.stringify(obj)
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(obj),
       });
       const result = await res.json();
-      if(result.login){
-        dispatch(AuthAction.setUserVerified({token: result.token}));
-        alert(result.message,);
-        navigate('/')
-      }else{ alert(result.message)}
+      if (result.login) {
+        dispatch(AuthAction.setUserVerified({ token: result.token }));
+        alert(result.message);
+        navigate("/");
+      } else {
+        alert(result.message);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -72,7 +83,7 @@ const navigate = useNavigate()
 
   return (
     <div className={style.login}>
-      <h3>Login</h3>
+      <h3>{ForgotPassword ? "Send Forgot Password link" : 'Login'}</h3>
       <form onSubmit={HandleSubmit}>
         <Input
           id="Email"
@@ -81,21 +92,30 @@ const navigate = useNavigate()
           onChange={HandleEmail}
           value={emailState.value}
         />
-        <Input
-          id="Password"
-          type="password"
-          isValid={passwordState.isValid}
-          onChange={HandlePassword}
-          value={passwordState.value}
-        />
+        {!ForgotPassword && (
+          <Input
+            id="Password"
+            type="password"
+            isValid={passwordState.isValid}
+            onChange={HandlePassword}
+            value={passwordState.value}
+          />
+        )}
 
         <div className={style.actions}>
           <Button type="submit" disabled={!formIsValid}>
-            Login
+            {!ForgotPassword ? "Login" : "Forgot Password"}
           </Button>
         </div>
-        <Link to="/signup">Sign Up</Link>
       </form>
+        <Link to="/signup">Sign Up</Link>
+        <button className={style.btn}
+          onClick={() =>
+            setForgotPassword(!ForgotPassword)
+          }
+        >
+          {ForgotPassword ? "Login" : "Forgot Password"}
+        </button>
     </div>
   );
 }
