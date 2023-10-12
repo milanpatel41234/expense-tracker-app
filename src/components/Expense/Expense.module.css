@@ -1,59 +1,79 @@
-.container{
-    width: 90%;
-    max-width: 40rem;
-    margin: auto;
+.container {
+  width: 90%;
+  max-width: 40rem;
+  margin: auto;
 }
-.container li{
-    list-style: none;
+.container li {
+  list-style: none;
 }
-.container form{
-    justify-content: flex-start;
+.container form {
+  justify-content: flex-start;
+}
+.contdiv {
+  display: flex;
+  justify-content: space-between;
+  padding: 1%;
+}
+.inDiv {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.inDiv select {
+  flex: 3;
+  font: inherit;
+  padding: 0.35rem 0.35rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  max-width: 20rem;
+  max-height: 3rem;
+}
+.list {
+  border-radius: 20px;
+  padding: 5px;
+  background-color: rgb(185, 181, 185);
+  margin-top: 0.3rem;
 }
 
-.inDiv{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
+.listdiv {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-left: 3vw;
+  padding-right: 3vw;
+  height: 2.5rem;
+  align-items: center;
 }
-.inDiv select{
-    
-    flex: 3;
-    font: inherit;
-    padding: 0.35rem 0.35rem;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    max-width: 20rem;
-    max-height: 3rem;
+.listdi {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 3vw;
+  padding-right: 3vw;
+  height: 2.5rem;
 }
-.list{
-    border-radius: 20px;
-    padding: 5px;
-    background-color: rgb(185, 181, 185);
-    margin-top: .3rem;
+.listdiv button {
+  height: 2.3rem;
+  width: 3.7rem;
+  border-radius: 0.5rem;
+  background-color: rgb(82, 80, 81);
+  color: white;
+  font-size: medium;
 }
-
-.listdiv{display:flex;
-    flex-direction:row;
-     justify-content:space-between;
-     padding-left: 3vw;
-     padding-right: 3vw;
-     height: 2.5rem;
-     align-items: center;
-    }
-.listdi{display:flex;
-    flex-direction:row;
-     justify-content:space-between;
-     align-items: center;
-     padding-left: 3vw;
-     padding-right: 3vw;
-     height: 2.5rem;
-    }
-    .listdiv button{
-        height: 2.3rem;
-        width: 3.7rem;
-        border-radius: .5rem;
-        background-color: rgb(82, 80, 81);
-        color: white;
-        font-size: medium;
-    }
+.btn {
+  text-decoration: none;
+  border: none;
+  font: 1rem sans-serif;
+  color: black;
+  background-color: rgb(175, 176, 177);
+  border-radius: 5px;
+  margin: 2px;
+  padding: 5px;
+}
+.btn:hover,
+.btn:active {
+  background: #919091;
+  border-color: #919091;
+}
