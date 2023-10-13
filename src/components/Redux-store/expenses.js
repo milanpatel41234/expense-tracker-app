@@ -6,7 +6,7 @@ export const getExpense = createAsyncThunk(
     try {
       const token = localStorage.getItem("Token");
 
-      const response = await fetch(`http://localhost:5000/expense`, {
+      const response = await fetch(`http://localhost:5000/expense?page=${arg}`, {
         headers: { "Content-Type": "application/json", token: token },
       });
       if (!response.ok) {
@@ -23,12 +23,15 @@ export const getExpense = createAsyncThunk(
 
 const ExpenseSlice = createSlice({
   name: "Expense",
-  initialState: { ExpenseArray: [], total: 0 },
+  initialState: { ExpenseArray: [], total: 0 , currentpage:1, next_page:false, prev_page:false},
   reducers: {},
   extraReducers: {
     [getExpense.fulfilled]: (state, { payload }) => {
       state.ExpenseArray = payload.expense;
       state.total = payload.total;
+      state.currentpage = payload.currentpage;
+      state.next_page = payload.next_page;
+      state.prev_page = payload.prev_page;
     },
   },
 });

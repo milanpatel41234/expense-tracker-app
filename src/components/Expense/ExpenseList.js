@@ -1,21 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import style from "./Expense.module.css";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getExpense } from "../Redux-store/expenses";
-import { useNavigate } from "react-router-dom";
 
 function ExpenseList() {
-  const navigate = useNavigate()
+
   const Auth = useSelector((state) => state.Auth);
   const AuthPremium = useSelector((state) => state.AuthPremium);
   const Expense = useSelector((state) => state.Expense);
   const dispatch = useDispatch();
   let ListItem = "No Items";
+  const [CurrentPage , setCurrentPage] = useState(1)
 
   useEffect(() => {
-    dispatch(getExpense());
-  }, [dispatch]);
+    dispatch(getExpense(CurrentPage));
+  }, [dispatch , CurrentPage]);
 
   const HandleDelete = async (id) => {
     try {
@@ -78,6 +78,22 @@ function ExpenseList() {
         </div>
       </div>
       {ListItem}
+      <div className={style.contdiv}>
+       <div>
+       {Expense.prev_page && (
+            <button onClick={()=> setCurrentPage(CurrentPage-1)} className={style.btn}>
+              ...prev
+            </button>
+            )}
+       </div>
+        <div>
+          {Expense.next_page && (
+            <button onClick={()=> setCurrentPage(CurrentPage+1)} className={style.btn}>
+             Next...
+            </button>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

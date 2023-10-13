@@ -41,7 +41,7 @@ function ExpenseForm() {
           category: Category,
           details: Details,
         };
-      const res = await fetch(`http://localhost:5000/expense`, {
+      const res = await fetch(`http://localhost:5000/expense?page=1`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
