@@ -6,7 +6,7 @@ export const getExpense = createAsyncThunk(
     try {
       const token = localStorage.getItem("Token");
 
-      const response = await fetch(`http://localhost:5000/expense?page=${arg}`, {
+      const response = await fetch(`http://localhost:5000/expense?page=${arg.CurrentPage}&&pagelimit=${arg.PageLimit}`, {
         headers: { "Content-Type": "application/json", token: token },
       });
       if (!response.ok) {

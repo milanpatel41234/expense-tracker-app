@@ -5,17 +5,19 @@ import { useSelector, useDispatch } from "react-redux";
 import { getExpense } from "../Redux-store/expenses";
 
 function ExpenseList() {
-
   const Auth = useSelector((state) => state.Auth);
   const AuthPremium = useSelector((state) => state.AuthPremium);
   const Expense = useSelector((state) => state.Expense);
   const dispatch = useDispatch();
   let ListItem = "No Items";
-  const [CurrentPage , setCurrentPage] = useState(1)
+  const [CurrentPage, setCurrentPage] = useState(1);
+  const [PageLimit, setPageLimit] = useState(
+    localStorage.PageLimit ? localStorage.getItem("PageLimit") : 5
+  );
 
   useEffect(() => {
-    dispatch(getExpense(CurrentPage));
-  }, [dispatch , CurrentPage]);
+    dispatch(getExpense({ CurrentPage, PageLimit }));
+  }, [dispatch, CurrentPage, PageLimit]);
 
   const HandleDelete = async (id) => {
     try {
@@ -37,13 +39,17 @@ function ExpenseList() {
       });
 
       if (res.ok) {
-        const data = await res.json();
+        // const data = await res.json();
         //fetch(data.fileURL);
-       
       } else throw new Error(res.error);
     } catch (error) {
       console.log(error);
     }
+  };
+  const HandlePageLimit = (e) => {
+    setPageLimit(e.target.value);
+    localStorage.setItem("PageLimit", e.target.value);
+    setCurrentPage(1);
   };
 
   if (Expense.ExpenseArray && Expense.ExpenseArray.length > 0) {
@@ -77,19 +83,37 @@ function ExpenseList() {
           )}
         </div>
       </div>
+
       {ListItem}
       <div className={style.contdiv}>
-       <div>
-       {Expense.prev_page && (
-            <button onClick={()=> setCurrentPage(CurrentPage-1)} className={style.btn}>
+        <div>
+          {Expense.prev_page && (
+            <button
+              onClick={() => setCurrentPage(CurrentPage - 1)}
+              className={style.btn}
+            >
               ...prev
             </button>
-            )}
-       </div>
+          )}
+        </div>
+        <div>
+          <label htmlFor="pagelimit">Items per Page : </label>
+          <select id="pagelimit" onChange={HandlePageLimit} value={PageLimit}>
+            <option value="5">5</option>
+            <option value="8">8</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+            <option value="25">25</option>
+          </select>
+        </div>
         <div>
           {Expense.next_page && (
-            <button onClick={()=> setCurrentPage(CurrentPage+1)} className={style.btn}>
-             Next...
+            <button
+              onClick={() => setCurrentPage(CurrentPage + 1)}
+              className={style.btn}
+            >
+              Next...
             </button>
           )}
         </div>
