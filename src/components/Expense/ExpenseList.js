@@ -14,6 +14,8 @@ function ExpenseList() {
   const [PageLimit, setPageLimit] = useState(
     localStorage.PageLimit ? localStorage.getItem("PageLimit") : 5
   );
+  const [DownloadBtn, setDownloadBtn] = useState("Download");
+  const [LinkBtn, setLinkBtn] = useState(false);
 
   useEffect(() => {
     dispatch(getExpense({ CurrentPage, PageLimit }));
@@ -33,16 +35,20 @@ function ExpenseList() {
   };
 
   const DownloadExpense = async () => {
+    setDownloadBtn("Genrating...");
     try {
       const res = await fetch(`http://localhost:5000/downloadexpense`, {
         headers: { "Content-Type": "application/json", token: Auth.token },
       });
 
       if (res.ok) {
-        // const data = await res.json();
-        //fetch(data.fileURL);
+        const data = await res.json();
+        setDownloadBtn('Download');
+        console.log(data.fileURL)
+        setLinkBtn(data.fileURL);
       } else throw new Error(res.error);
     } catch (error) {
+      setDownloadBtn("Failed");
       console.log(error);
     }
   };
@@ -77,10 +83,17 @@ function ExpenseList() {
         <b>Total : {Expense.total}</b>
         <div>
           {AuthPremium.isPremiumUser && (
-            <button onClick={DownloadExpense} className={style.btn}>
-              Download
-            </button>
-          )}
+           LinkBtn ? <div >
+                Link Generated : 
+                <a onClick={()=>setLinkBtn(false)} href={LinkBtn} target="_blank" rel="noopener noreferrer">
+                  Click Here
+                </a>
+              </div> : <button onClick={DownloadExpense} className={style.btn}>
+                {DownloadBtn}
+              </button>
+             
+              
+             )}
         </div>
       </div>
 
