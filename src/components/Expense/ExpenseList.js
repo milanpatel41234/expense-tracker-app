@@ -15,7 +15,6 @@ function ExpenseList() {
     localStorage.PageLimit ? localStorage.getItem("PageLimit") : 5
   );
   const [DownloadBtn, setDownloadBtn] = useState("Download");
-  const [LinkBtn, setLinkBtn] = useState(false);
 
   useEffect(() => {
     dispatch(getExpense({ CurrentPage, PageLimit }));
@@ -23,11 +22,11 @@ function ExpenseList() {
 
   const HandleDelete = async (id) => {
     try {
-      const res = await fetch(`http://localhost:5000/expense/${id}`, {
+      const res = await fetch(`http://13.234.122.35:5000/expense/${id}`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json", token: Auth.token },
       });
-      if (res.ok) dispatch(getExpense());
+      if (res.ok) dispatch(getExpense({ CurrentPage, PageLimit }));
       else throw new Error(res.error);
     } catch (error) {
       console.log(error);
@@ -35,21 +34,20 @@ function ExpenseList() {
   };
 
   const DownloadExpense = async () => {
-    setDownloadBtn("Genrating...");
+    setDownloadBtn("Generating...");
     try {
-      const res = await fetch(`http://localhost:5000/downloadexpense`, {
+      const res = await fetch(`http://13.234.122.35:5000/downloadexpense`, {
         headers: { "Content-Type": "application/json", token: Auth.token },
       });
 
       if (res.ok) {
         const data = await res.json();
-        setDownloadBtn('Download');
-        console.log(data.fileURL)
-        setLinkBtn(data.fileURL);
+        setDownloadBtn(data.fileURL);
+        console.log(data.fileURL);
       } else throw new Error(res.error);
     } catch (error) {
-      setDownloadBtn("Failed");
-      console.log(error);
+      setDownloadBtn("Download");
+      alert(error);
     }
   };
   const HandlePageLimit = (e) => {
@@ -82,18 +80,24 @@ function ExpenseList() {
       <div className={style.contdiv}>
         <b>Total : {Expense.total}</b>
         <div>
-          {AuthPremium.isPremiumUser && (
-           LinkBtn ? <div >
-                Link Generated : 
-                <a onClick={()=>setLinkBtn(false)} href={LinkBtn} target="_blank" rel="noopener noreferrer">
-                  Click Here
-                </a>
-              </div> : <button onClick={DownloadExpense} className={style.btn}>
+          {AuthPremium.isPremiumUser &&
+            (DownloadBtn === "Download" || DownloadBtn === "Generating..." ? (
+              <button onClick={DownloadExpense} className={style.btn}>
                 {DownloadBtn}
               </button>
-             
-              
-             )}
+            ) : (
+              <div>
+                Link Generated :
+                <a
+                  onClick={() => setDownloadBtn("Download")}
+                  href={DownloadBtn}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Click Here
+                </a>
+              </div>
+            ))}
         </div>
       </div>
 

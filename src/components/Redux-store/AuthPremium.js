@@ -6,7 +6,7 @@ export const varifyPremium = createAsyncThunk('Authentication/premium', async(ar
 try {
   const token = localStorage.getItem('Token');
   
-    const response = await fetch(`http://localhost:5000/varifypremium`,{
+    const response = await fetch(`http://13.234.122.35:5000/varifypremium`,{
       headers:{"Content-Type":"application/json", "token":token}
     });
     if (!response.ok) {

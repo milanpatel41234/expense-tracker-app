@@ -53,13 +53,13 @@ function Login() {
 
   const HandleSubmit = async (e) => {
     e.preventDefault();
-    let url = `http://localhost:5000/login`;
+    let url = `http://13.234.122.35:5000/login`;
     let obj = {
       email: emailState.value,
       password: passwordState.value,
     };
     if (ForgotPassword) {
-      url = `http://localhost:5000/forgotpassword`;
+      url = `http://13.234.122.35:5000/forgotpassword`;
       obj = { email: emailState.value };
     }
     try {
