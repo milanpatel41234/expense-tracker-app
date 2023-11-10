@@ -6,7 +6,6 @@ import { getExpense } from "../Redux-store/expenses";
 
 function ExpenseList() {
   const Auth = useSelector((state) => state.Auth);
-  const AuthPremium = useSelector((state) => state.AuthPremium);
   const Expense = useSelector((state) => state.Expense);
   const dispatch = useDispatch();
   let ListItem = "No Items";
@@ -14,7 +13,6 @@ function ExpenseList() {
   const [PageLimit, setPageLimit] = useState(
     localStorage.PageLimit ? localStorage.getItem("PageLimit") : 5
   );
-  const [DownloadBtn, setDownloadBtn] = useState("Download");
 
   useEffect(() => {
     dispatch(getExpense({ CurrentPage, PageLimit }));
@@ -22,7 +20,7 @@ function ExpenseList() {
 
   const HandleDelete = async (id) => {
     try {
-      const res = await fetch(`http://13.234.122.35:5000/expense/${id}`, {
+      const res = await fetch(`http://localhost:5000/expense/${id}`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json", token: Auth.token },
       });
@@ -33,23 +31,7 @@ function ExpenseList() {
     }
   };
 
-  const DownloadExpense = async () => {
-    setDownloadBtn("Generating...");
-    try {
-      const res = await fetch(`http://13.234.122.35:5000/downloadexpense`, {
-        headers: { "Content-Type": "application/json", token: Auth.token },
-      });
-
-      if (res.ok) {
-        const data = await res.json();
-        setDownloadBtn(data.fileURL);
-        console.log(data.fileURL);
-      } else throw new Error(res.error);
-    } catch (error) {
-      setDownloadBtn("Download");
-      alert(error);
-    }
-  };
+  
   const HandlePageLimit = (e) => {
     setPageLimit(e.target.value);
     localStorage.setItem("PageLimit", e.target.value);
@@ -59,7 +41,7 @@ function ExpenseList() {
   if (Expense.ExpenseArray && Expense.ExpenseArray.length > 0) {
     ListItem = Expense.ExpenseArray.map((exp) => {
       return (
-        <li key={exp.id} className={style.list}>
+        <li key={exp._id} className={style.list}>
           <div className={style.listdi}>
             <h3>{exp.amount}</h3>
             <p>Category: {exp.category}</p>
@@ -67,7 +49,7 @@ function ExpenseList() {
           <div className={style.listdiv}>
             <p>{exp.date}</p>
             <p>{exp.details}</p>
-            <button onClick={HandleDelete.bind(null, exp.id)} variant="danger">
+            <button onClick={HandleDelete.bind(null, exp._id)} variant="danger">
               Delete
             </button>
           </div>
@@ -79,26 +61,6 @@ function ExpenseList() {
     <div className={style.container}>
       <div className={style.contdiv}>
         <b>Total : {Expense.total}</b>
-        <div>
-          {AuthPremium.isPremiumUser &&
-            (DownloadBtn === "Download" || DownloadBtn === "Generating..." ? (
-              <button onClick={DownloadExpense} className={style.btn}>
-                {DownloadBtn}
-              </button>
-            ) : (
-              <div>
-                Link Generated :
-                <a
-                  onClick={() => setDownloadBtn("Download")}
-                  href={DownloadBtn}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Click Here
-                </a>
-              </div>
-            ))}
-        </div>
       </div>
 
       {ListItem}

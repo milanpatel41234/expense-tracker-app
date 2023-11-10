@@ -59,7 +59,7 @@ function SignUp(props) {
         password:passwordState.value
     }
    try {
-    const res = await fetch(`http://13.234.122.35:5000/signup`,{
+    const res = await fetch(`http://localhost:5000/signup`,{
         method: 'POST',
         headers: {'content-type':'application/json'},
         body: JSON.stringify(newuser)

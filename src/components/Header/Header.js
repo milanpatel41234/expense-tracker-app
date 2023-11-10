@@ -23,8 +23,7 @@ function Header() {
   };
   const PurchasePremium = async (e) => {
     try {
-      console.log(Auth.token)
-      const res = await fetch("http://13.234.122.35:5000/purchasepremium", {
+      const res = await fetch("http://localhost:5000/purchasepremium", {
         headers: { token: Auth.token },
       });
       const response = await res.json();
@@ -33,7 +32,7 @@ function Header() {
         key: response.key_id,
         order_id: response.order.id,
         handler: async function (result) {
-          await fetch("http://13.234.122.35:5000/purchasepremium/updatestatus", {
+          await fetch("http://localhost:5000/purchasepremium/updatestatus", {
             method: "POST",
             headers: { "Content-Type": "application/json", token: Auth.token },
             body: JSON.stringify({
@@ -50,7 +49,7 @@ function Header() {
       RZP1.open();
       e.preventDefault();
       RZP1.on("payment.failed", async (result) => {
-        await fetch("http://13.234.122.35:5000/purchasepremium/updatestatus", {
+        await fetch("http://localhost:5000/purchasepremium/updatestatus", {
           method: "POST",
           headers: { "Content-Type": "application/json", token: Auth.token },
           body: JSON.stringify({

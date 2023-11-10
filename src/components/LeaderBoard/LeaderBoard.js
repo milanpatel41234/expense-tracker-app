@@ -9,13 +9,13 @@ function LeaderBoard() {
   useEffect(() => {
     (async () => {
       try {
-        const response = await fetch(`http://13.234.122.35:5000/leaderboard`, {
+        const response = await fetch(`http://localhost:5000/leaderboard`, {
           headers: { "Content-Type": "application/json", "token": Auth.token },
         });
         if(response.ok){
             const data = await response.json();
             setList(data.map((i)=>{
-                return <li key={i.email}><div className={style.list}><h3>{i.name}</h3><p>{i.total}</p></div></li>
+                return <li key={i._id}><div className={style.list}><h3>{i.name}</h3><p>{i.total}</p></div></li>
             }))
         }else throw new Error(response.error)
       } catch (error) {
