@@ -20,7 +20,7 @@ function ExpenseList() {
 
   const HandleDelete = async (id) => {
     try {
-      const res = await fetch(`http://localhost:5000/expense/${id}`, {
+      const res = await fetch(`https://expense-tracker-app-backend.vercel.app/expense/${id}`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json", token: Auth.token },
       });

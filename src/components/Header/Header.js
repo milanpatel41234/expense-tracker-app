@@ -23,7 +23,7 @@ function Header() {
   };
   const PurchasePremium = async (e) => {
     try {
-      const res = await fetch("http://localhost:5000/purchasepremium", {
+      const res = await fetch("https://expense-tracker-app-backend.vercel.app/purchasepremium", {
         headers: { token: Auth.token },
       });
       const response = await res.json();
@@ -32,7 +32,7 @@ function Header() {
         key: response.key_id,
         order_id: response.order.id,
         handler: async function (result) {
-          await fetch("http://localhost:5000/purchasepremium/updatestatus", {
+          await fetch("https://expense-tracker-app-backend.vercel.app/purchasepremium/updatestatus", {
             method: "POST",
             headers: { "Content-Type": "application/json", token: Auth.token },
             body: JSON.stringify({
@@ -49,7 +49,7 @@ function Header() {
       RZP1.open();
       e.preventDefault();
       RZP1.on("payment.failed", async (result) => {
-        await fetch("http://localhost:5000/purchasepremium/updatestatus", {
+        await fetch("https://expense-tracker-app-backend.vercel.app/purchasepremium/updatestatus", {
           method: "POST",
           headers: { "Content-Type": "application/json", token: Auth.token },
           body: JSON.stringify({

@@ -59,7 +59,7 @@ function SignUp(props) {
         password:passwordState.value
     }
    try {
-    const res = await fetch(`http://localhost:5000/signup`,{
+    const res = await fetch(`https://expense-tracker-app-backend.vercel.app/signup`,{
         method: 'POST',
         headers: {'content-type':'application/json'},
         body: JSON.stringify(newuser)

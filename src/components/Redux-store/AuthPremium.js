@@ -6,7 +6,7 @@ export const varifyPremium = createAsyncThunk('Authentication/premium', async(ar
 try {
   const token = localStorage.getItem('Token');
   
-    const response = await fetch(`http://localhost:5000/varifypremium`,{
+    const response = await fetch(`https://expense-tracker-app-backend.vercel.app/varifypremium`,{
       headers:{"Content-Type":"application/json", "token":token}
     });
     if (!response.ok) {

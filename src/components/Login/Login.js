@@ -53,13 +53,13 @@ function Login() {
 
   const HandleSubmit = async (e) => {
     e.preventDefault();
-    let url = `http://localhost:5000/login`;
+    let url = `https://expense-tracker-app-backend.vercel.app/login`;
     let obj = {
       email: emailState.value,
       password: passwordState.value,
     };
     if (ForgotPassword) {
-      url = `http://localhost:5000/forgotpassword`;
+      url = `https://expense-tracker-app-backend.vercel.app/forgotpassword`;
       obj = { email: emailState.value };
     }
     try {

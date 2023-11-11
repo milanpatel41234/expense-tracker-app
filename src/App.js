@@ -29,8 +29,8 @@ function App() {
               Auth.loginState ? <ExpensePage /> : <Navigate to="/login" />
             }
           />
-          <Route path="login" element={<Login />} />
-          <Route path="signup" element={<SignUp />} />
+          <Route path="login" element={ Auth.loginState ? <Navigate to="/" /> : <Login />} />
+          <Route path="signup" element={ Auth.loginState ? <Navigate to="/" /> : <SignUp />} />
           <Route
             path="leaderboard"
             element={ Auth.loginState && AuthPremium.isPremiumUser && <LeaderBoard />}

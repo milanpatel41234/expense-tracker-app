@@ -9,7 +9,7 @@ function LeaderBoard() {
   useEffect(() => {
     (async () => {
       try {
-        const response = await fetch(`http://localhost:5000/leaderboard`, {
+        const response = await fetch(`https://expense-tracker-app-backend.vercel.app/leaderboard`, {
           headers: { "Content-Type": "application/json", "token": Auth.token },
         });
         if(response.ok){

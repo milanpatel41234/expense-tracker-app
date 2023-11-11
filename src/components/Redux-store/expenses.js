@@ -5,7 +5,7 @@ export const getExpense = createAsyncThunk(
   async (arg, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem("Token");
-      const response = await fetch(`http://localhost:5000/expense?page=${arg.CurrentPage}&&pagelimit=${arg.PageLimit}`, {
+      const response = await fetch(`https://expense-tracker-app-backend.vercel.app/expense?page=${arg.CurrentPage}&&pagelimit=${arg.PageLimit}`, {
         headers: { "Content-Type": "application/json", token: token },
       });
       if (!response.ok) {
