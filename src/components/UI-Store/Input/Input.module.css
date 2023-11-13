@@ -4,9 +4,6 @@
     align-items: stretch;
     flex-direction: column;
   }
-  .control input {
-    display: block;
-  }
   
   
   .control input {
@@ -30,5 +27,11 @@
   
   .actions {
     text-align: center;
+  }
+  @media (max-width:768px) {
+    .control input {
+      font-size: small;
+      padding: 0.25rem;
+    }
   }
   

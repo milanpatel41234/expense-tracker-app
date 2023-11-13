@@ -77,3 +77,9 @@
   background: #919091;
   border-color: #919091;
 }
+@media (max-width:768px) {
+  .inDiv select{
+    font-size: small;
+    padding: 0.25rem;
+  }
+}

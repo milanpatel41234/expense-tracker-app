@@ -66,7 +66,7 @@ function Header() {
   };
   return (
     <div>
-      <h2 className={style.header}>My Expenses</h2>
+      <h2 className={style.header}>Expense Tracker</h2>
       <div className={style.nav}>
         {Auth.loginState &&
           (AuthPremium.isPremiumUser ? (
