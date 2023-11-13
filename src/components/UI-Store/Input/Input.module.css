@@ -28,10 +28,5 @@
   .actions {
     text-align: center;
   }
-  @media (max-width:768px) {
-    .control input {
-      font-size: small;
-      padding: 0.25rem;
-    }
-  }
+ 
   

@@ -26,8 +26,12 @@
   padding: 0.35rem 0.35rem;
   border-radius: 6px;
   border: 1px solid #ccc;
-  max-width: 20rem;
+  max-width: 17rem;
   max-height: 3rem;
+}
+.inDiv input {
+  min-width: 9rem;
+  margin-right: 1rem;
 }
 .list {
   border-radius: 20px;
@@ -76,10 +80,4 @@
 .btn:active {
   background: #919091;
   border-color: #919091;
-}
-@media (max-width:768px) {
-  .inDiv select{
-    font-size: small;
-    padding: 0.25rem;
-  }
 }

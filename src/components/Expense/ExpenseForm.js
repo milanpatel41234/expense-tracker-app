@@ -67,7 +67,7 @@ function ExpenseForm() {
     <div className={style.container}>
       <form onSubmit={HandleSubmit}>
         <div className={style.inDiv}>
-          <Input id="Date" type="date" onChange={HandleDate} value={Date} />
+          <Input id="Date" type="date" onChange={HandleDate} value={Date}  placeholder="Date"/>
           <select onChange={HandleCategory} value={Category}>
             <option value="NO">Select Category</option>
             <option value="Investment">Investment</option>
