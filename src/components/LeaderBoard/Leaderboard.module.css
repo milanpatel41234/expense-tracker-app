@@ -7,13 +7,13 @@
   padding-right: 4vw;
   border-radius: 20px;
   background-color: rgb(185, 181, 185);
-  width: 90%;
+  width: 85%;
   max-width: 35rem;
   margin: auto;
   margin-top: 0.3rem;
 }
 .container ol{
-    width: 90%;
+    width: 85%;
     max-width: 40rem;
     list-style-position:outside;
     margin: auto;
