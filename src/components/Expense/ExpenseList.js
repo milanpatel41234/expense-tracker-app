@@ -44,7 +44,7 @@ function ExpenseList() {
         <li key={exp._id} className={style.list}>
           <div className={style.listdi}>
             <h3>{exp.amount}</h3>
-            <p>Category: {exp.category}</p>
+            <p>{exp.category}</p>
             <p>{exp.date}</p>
           </div>
           <div className={style.listdiv}>

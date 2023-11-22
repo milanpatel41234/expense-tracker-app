@@ -69,9 +69,12 @@ text-align: start;
   height: 2.3rem;
   width: 3.7rem;
   border-radius: 0.5rem;
-  background-color: rgb(126, 4, 4);
+  background-color: rgb(1, 8, 75);
   color: white;
   font-size: medium;
+}
+.listdi :nth-child(2) {
+  color: rgb(0, 0, 59);
 }
 .btn {
   text-decoration: none;
