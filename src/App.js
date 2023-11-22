@@ -8,8 +8,10 @@ import ExpensePage from "./components/Expense/ExpensePage";
 import Header from "./components/Header/Header";
 
 import React, { Suspense } from "react";
+import Modal from "./components/UI-Store/AlertModal/Modal";
 
 function App() {
+  const Alert = useSelector(state=>state.Alert)
   const LeaderBoard = React.lazy(() =>
     import("./components/LeaderBoard/LeaderBoard")
   );
@@ -18,6 +20,7 @@ function App() {
 
   return (
     <div className="App">
+   {Alert.Active && <Modal />}
         <Header />
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>

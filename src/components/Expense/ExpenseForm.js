@@ -12,6 +12,7 @@ function ExpenseForm() {
   const [Date, setDate] = useState("");
   const [Details, setDetails] = useState("");
   const [Category, setCategory] = useState("NO");
+  const [addExpense , setAddExpense] = useState('Add Expense')
 
   const HandleExpenseTitle = (e) => {
     setAmount(e.target.value);
@@ -34,6 +35,7 @@ function ExpenseForm() {
       Details.trim() !== "" &&
       Category !== "NO"
     ) {
+      setAddExpense('Adding...');
       try {
         const Expense = {
           amount: Amount,
@@ -49,13 +51,14 @@ function ExpenseForm() {
           },
           body: JSON.stringify(Expense),
         });
-      if(!res.ok) throw new Error()
-      else{
-    setAmount('');
-    setCategory('NO');
-    setDate('');
-    setDetails('');
-    dispatch(getExpense({ CurrentPage:1, PageLimit:localStorage.getItem("PageLimit")||5}))
+        if(!res.ok) throw new Error()
+        else{
+      setAmount('');
+      setCategory('NO');
+      setDate('');
+      setDetails('');
+      dispatch(getExpense({ CurrentPage:1, PageLimit:localStorage.getItem("PageLimit")||5}))
+      setAddExpense('Add Expense')
     }
       } catch (error) {
         console.log("errrr", error);
@@ -89,7 +92,7 @@ function ExpenseForm() {
           onChange={HandleDetails}
           value={Details}
         />
-        <Button type="submit">Add Expense</Button>
+        <Button type="submit">{addExpense}</Button>
       </form>
     </div>
   );

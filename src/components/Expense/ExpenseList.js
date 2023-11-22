@@ -3,19 +3,24 @@ import style from "./Expense.module.css";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getExpense } from "../Redux-store/expenses";
+import LoadingSkeleton from "../UI-Store/Skeleton/Skeleton";
 
 function ExpenseList() {
   const Auth = useSelector((state) => state.Auth);
   const Expense = useSelector((state) => state.Expense);
   const dispatch = useDispatch();
-  let ListItem = "No Items";
+  let ListItem = <h3>No Expense available</h3>;
+  const [loading, setLoading] = useState(true);
   const [CurrentPage, setCurrentPage] = useState(1);
   const [PageLimit, setPageLimit] = useState(
     localStorage.PageLimit ? localStorage.getItem("PageLimit") : 5
   );
 
   useEffect(() => {
-    dispatch(getExpense({ CurrentPage, PageLimit }));
+    (async()=>{
+     await dispatch(getExpense({ CurrentPage, PageLimit }));
+      setLoading(false);
+    })()
   }, [dispatch, CurrentPage, PageLimit]);
 
   const HandleDelete = async (id) => {
@@ -38,12 +43,12 @@ function ExpenseList() {
     setCurrentPage(1);
   };
 
-  if (Expense.ExpenseArray && Expense.ExpenseArray.length > 0) {
+  if (Expense.ExpenseArray.length > 0) {
     ListItem = Expense.ExpenseArray.map((exp) => {
       return (
         <li key={exp._id} className={style.list}>
           <div className={style.listdi}>
-            <h3>{exp.amount}</h3>
+            <h3>Rs. {exp.amount}</h3>
             <p>{exp.category}</p>
             <p>{exp.date}</p>
           </div>
@@ -62,8 +67,15 @@ function ExpenseList() {
       <div className={style.contdiv}>
         <b>Total : {Expense.total}</b>
       </div>
-
-      {ListItem}
+     {loading ? <>
+     <LoadingSkeleton/>
+     <LoadingSkeleton/>
+     <LoadingSkeleton/>
+     <LoadingSkeleton/>
+     <LoadingSkeleton/>
+     <LoadingSkeleton/>
+     </>
+      : ListItem}
       <div className={style.contdiv}>
         <div>
           {Expense.prev_page && (
@@ -75,7 +87,7 @@ function ExpenseList() {
             </button>
           )}
         </div>
-        <div>
+        {Expense.ExpenseArray.length > 0 && <div>
           <label htmlFor="pagelimit">Items per Page : </label>
           <select id="pagelimit" onChange={HandlePageLimit} value={PageLimit}>
             <option value="5">5</option>
@@ -85,7 +97,7 @@ function ExpenseList() {
             <option value="20">20</option>
             <option value="25">25</option>
           </select>
-        </div>
+        </div>}
         <div>
           {Expense.next_page && (
             <button

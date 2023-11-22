@@ -2,9 +2,11 @@ import React, { useEffect, useReducer, useState } from "react";
 import style from "./Login.module.css";
 import Button from "../UI-Store/Button/Button";
 import Input from "../UI-Store/Input/Input";
+import Card from "../UI-Store/Card/Card";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { AuthAction } from "../Redux-store";
+import { AlertAction } from "../Redux-store";
 
 const emailReduser = (state, action) => {
   if (action.type === "INPUT") {
@@ -70,11 +72,11 @@ function Login() {
       });
       const result = await res.json();
       if (result.login) {
+        dispatch(AlertAction.ShowAlert(result.message));
         dispatch(AuthAction.setUserVerified({ token: result.token }));
-        alert(result.message);
         navigate("/");
       } else {
-        alert(result.message);
+        dispatch(AlertAction.ShowAlert(result.message));
       }
     } catch (error) {
       console.log(error);
@@ -82,7 +84,7 @@ function Login() {
   };
 
   return (
-    <div className={style.login}>
+    <Card className={style.login}>
       <h3>{ForgotPassword ? "Send Forgot Password link" : 'Login'}</h3>
       <form onSubmit={HandleSubmit}>
         <Input
@@ -109,14 +111,14 @@ function Login() {
         </div>
       </form>
         <Link to="/signup">Sign Up</Link>
-        <button className={style.btn}
+        <button className={style.button}
           onClick={() =>
             setForgotPassword(!ForgotPassword)
           }
         >
           {ForgotPassword ? "Login" : "Forgot Password"}
         </button>
-    </div>
+    </Card>
   );
 }
 

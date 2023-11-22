@@ -3,6 +3,8 @@ import style from "./SignUp.module.css";
 import Button from "../UI-Store/Button/Button";
 import Input from "../UI-Store/Input/Input";
 import { Link , useNavigate} from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { AlertAction } from "../Redux-store";
 
 const emailReduser = (state, action) => {
   if (action.type === "INPUT") {
@@ -23,6 +25,7 @@ const passwordReduser = (state, action) => {
 
 function SignUp(props) {
     const navigate = useNavigate();
+    const dispatch = useDispatch()
   const [Name, setName] = useState("");
   const [formIsValid, setFormIsValid] = useState(false);
 
@@ -66,11 +69,11 @@ function SignUp(props) {
     });
   const result = await res.json();
     if(!result.error){
-        alert('account created successfully');
+      dispatch(AlertAction.ShowAlert('account created successfully'));
         navigate('/login');
     }else throw new Error(result.message);
    } catch (error) {
-   alert(error.message);
+    dispatch(AlertAction.ShowAlert(error.message));
    }
   };
 
