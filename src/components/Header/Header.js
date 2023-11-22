@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import style from "./Header.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { AuthAction } from "../Redux-store";
@@ -9,6 +9,7 @@ function Header() {
   const navigate = useNavigate();
   const Auth = useSelector((state) => state.Auth);
   const AuthPremium = useSelector((state) => state.AuthPremium);
+  const [btnClass , setBtnClass] = useState(null);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -65,37 +66,44 @@ function Header() {
     }
   };
   return (
-    <div>
-      <h2 className={style.header}>Expense Tracker</h2>
+    <div className={style.header}>
+      <div>
+      <h2 >Expense Tracker</h2>
+      </div>
       <div className={style.nav}>
         {Auth.loginState &&
           (AuthPremium.isPremiumUser ? (
             <div>
-              <span className={style.premium}>Premium User</span>
-              <Link className={style.btn} to="/leaderboard">
+              <span className={`${style.premium} ${style[btnClass]}`}>Premium User</span>
+              <Link className={`${style.btn} ${style[btnClass]}`} to="/leaderboard">
                 LeaderBoard
               </Link>
             </div>
           ) : (
-            <button className={style.premium} onClick={PurchasePremium}>
+            <button  className={`${style.premium} ${style[btnClass]}`} onClick={PurchasePremium}>
               Buy Premium
             </button>
           ))}
         {Auth.loginState ? (
           <div>
-            <Link className={style.btn} to="/">
+            <Link className={`${style.btn} ${style[btnClass]}`} to="/">
               Expenses
             </Link>
-            <button className={style.btn} onClick={HandleLogout}>
+            <button className={`${style.btn} ${style[btnClass]}`} onClick={HandleLogout}>
               Logout
             </button>
           </div>
         ) : (
-          <Link className={style.btn} to="/login">
+          <Link className={`${style.btn} ${style[btnClass]}`} to="/login">
             Login
           </Link>
         )}
       </div>
+        <div onClick={(e)=>{!btnClass ? setBtnClass('active') : setBtnClass(null)}} className={style.manubtn}>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
     </div>
   );
 }

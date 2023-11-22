@@ -46,8 +46,15 @@
   justify-content: space-between;
   padding-left: 3vw;
   padding-right: 3vw;
-  height: 2.5rem;
+  height: fit-content;
   align-items: center;
+ flex-wrap: wrap;
+}
+.listdiv p{
+word-wrap: break-word;
+max-width: 70%;
+margin: 0;
+text-align: start;
 }
 .listdi {
   display: flex;

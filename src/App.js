@@ -18,9 +18,7 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
         <Header />
-      </header>
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>
           <Route

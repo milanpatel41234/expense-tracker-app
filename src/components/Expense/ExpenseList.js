@@ -45,9 +45,9 @@ function ExpenseList() {
           <div className={style.listdi}>
             <h3>{exp.amount}</h3>
             <p>Category: {exp.category}</p>
+            <p>{exp.date}</p>
           </div>
           <div className={style.listdiv}>
-            <p>{exp.date}</p>
             <p>{exp.details}</p>
             <button onClick={HandleDelete.bind(null, exp._id)} variant="danger">
               Delete

@@ -1,25 +1,27 @@
-
 .header{
-  display: block;
-  width: 100vw;
-  height: fit-content;
+  background-color: #282c34;
+  min-height: 5rem;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  padding: .5rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+.header h2{
   margin: 0;
   padding: 0;
-  margin-bottom: 3px;
 }
 .nav{
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 97%;
-  margin: auto;
 }
 .btn{
   text-decoration: none;
   border: none;
   font: 1rem sans-serif;
-  color: black;
-  background-color: rgb(175, 176, 177);
+  color: rgb(255, 255, 255);
+  background-color: transparent;
   border-radius: 5px;
   margin: 2px;
   padding: 5px;
@@ -28,11 +30,28 @@
   text-decoration: none;
   border: none;
   font: 1rem sans-serif;
-  background-color: green;
+  color: rgb(109, 245, 109);
   border-radius: 5px;
   margin: 2px;
   padding: 5px;
-  color: white;
+  background-color: transparent;
+}
+.manubtn{
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 1.2rem;
+  width: 20px;
+  border-radius: 5px;
+  padding: 5px;
+
+}
+.manubtn span{
+  background-color: white;
+  height: 2px;
 }
 .btn:hover,
 .btn:active {
@@ -42,18 +61,35 @@
 .premium:hover {
   background-color: rgb(41, 131, 41);
 }
-
+.manubtn:hover{
+  background: #919091;
+  border-color: #919091;
+}
 @media (max-width: 768px) {
+  .header{
+    flex-direction: column;
+  }
+  .nav{flex-direction: column;}
+  .nav div{
+    display: flex;
+    flex-direction: column;
+  }
   .btn{
    font-size: 0.8rem;
    padding-left: 2px;
    padding-right: 2px;
-  
+  display: none;
   }
   .premium{
     font-size: 0.8rem;
     padding-left: 2px;
     padding-right: 2px;
-   
+    display: none;
+  }
+  .active{
+    display: flex;
+  }
+  .manubtn{
+    display: flex;
   }
 }
