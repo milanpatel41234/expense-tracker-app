@@ -28,6 +28,7 @@ function SignUp(props) {
     const dispatch = useDispatch()
   const [Name, setName] = useState("");
   const [formIsValid, setFormIsValid] = useState(false);
+  const [signUpBtn , setSignUpBtn] = useState('Create Account');
 
   const [emailState, dispatchEmail] = useReducer(emailReduser, {
     value: "",
@@ -56,6 +57,7 @@ function SignUp(props) {
 
   const HandleSubmit = async(e) => {
     e.preventDefault();
+    setSignUpBtn('Creating...');
     const newuser={
         name:Name,
         email:emailState.value,
@@ -68,8 +70,9 @@ function SignUp(props) {
         body: JSON.stringify(newuser)
     });
   const result = await res.json();
+  setSignUpBtn('Create');
     if(!result.error){
-      dispatch(AlertAction.ShowAlert('account created successfully'));
+      dispatch(AlertAction.ShowAlert(result.message));
         navigate('/login');
     }else throw new Error(result.message);
    } catch (error) {
@@ -105,7 +108,7 @@ function SignUp(props) {
 
         <div className={style.actions}>
           <Button type="submit" disabled={!formIsValid}>
-           Sign Up
+           {signUpBtn}
           </Button>
         </div>
          <Link to='/login'>Login</Link>

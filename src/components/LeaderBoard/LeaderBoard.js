@@ -30,7 +30,7 @@ function LeaderBoard() {
 
   return (
     <div className={style.container}>
-
+      <h3>LeaderBoard</h3>
       <ol>
         { loading ? <>
          <LoadingSkeleton />

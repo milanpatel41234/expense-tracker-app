@@ -30,6 +30,7 @@ function Login() {
   const dispatch = useDispatch();
   const [ForgotPassword, setForgotPassword] = useState(false);
   const [formIsValid, setFormIsValid] = useState(false);
+  const [submitBtn , setSubmitBtn] = useState('Login');
 
   const [emailState, dispatchEmail] = useReducer(emailReduser, {
     value: "",
@@ -54,6 +55,7 @@ function Login() {
   };
 
   const HandleSubmit = async (e) => {
+    setSubmitBtn(ForgotPassword ? 'Sending...' : 'Loging...');
     e.preventDefault();
     let url = `https://expense-tracker-app-backend.vercel.app/login`;
     let obj = {
@@ -78,6 +80,7 @@ function Login() {
       } else {
         dispatch(AlertAction.ShowAlert(result.message));
       }
+      ForgotPassword ? setSubmitBtn('Send') : setSubmitBtn('Login')
     } catch (error) {
       console.log(error);
     }
@@ -106,14 +109,15 @@ function Login() {
 
         <div className={style.actions}>
           <Button type="submit" disabled={!formIsValid}>
-            {!ForgotPassword ? "Login" : "Forgot Password"}
+            {submitBtn}
           </Button>
         </div>
       </form>
         <Link to="/signup">Sign Up</Link>
         <button className={style.button}
-          onClick={() =>
-            setForgotPassword(!ForgotPassword)
+          onClick={() =>{
+            setForgotPassword(!ForgotPassword);
+            setSubmitBtn(ForgotPassword ? "Login" : "Send")}
           }
         >
           {ForgotPassword ? "Login" : "Forgot Password"}
